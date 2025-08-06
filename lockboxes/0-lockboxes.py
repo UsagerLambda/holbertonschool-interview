@@ -52,10 +52,11 @@ def recursion_magic(checker, boxes, index=0):
     if 0 <= index < len(checker):
         # Pour chaque clé dans la boîte à l'index actuel
         for key in boxes[index]:
+            if 0 <= key < len(checker):
             # Si la boîte n’a pas encore été ouverte
-            if checker[key] is not True:
-                checker[key] = True  # Marque la boîte comme ouverte
-                # Récursion à partir de la liste à l'index key
-                recursion_magic(checker, boxes, index=key)
+                if checker[key] is not True:
+                    checker[key] = True  # Marque la boîte comme ouverte
+                    # Récursion à partir de la liste à l'index key
+                    recursion_magic(checker, boxes, index=key)
 
     return checker
