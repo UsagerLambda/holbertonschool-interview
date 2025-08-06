@@ -49,9 +49,9 @@ def recursion_magic(checker, boxes, index=0):
     Returns:
         list: The modified list "checker" filled with the lists checked
     """
-    if index <= len(boxes) and len(checker):
-        # Pour chaque clé dans la boîte à l'index actuel
-        for key in boxes[index]:
+    # Pour chaque clé dans la boîte à l'index actuel
+    for key in boxes[index]:
+        if 0 <= index < len(checker):
             # Si la boîte n’a pas encore été ouverte
             if checker[key] is not True:
                 checker[key] = True  # Marque la boîte comme ouverte
