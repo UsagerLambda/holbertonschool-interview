@@ -15,28 +15,22 @@ def canUnlockAll(boxes):
     Returns:
         bool: True if all boxes can be opened, False otherwise.
     """
-    visited = set()  # Créer un set qui stockera les index visité
-    recursion_magic(boxes, visited, index=0)
-    # Si la taille de visited est égal à celle de boxes,
-    # alors toutes les boxe ont été visité donc la condition est vrai
-    # donc true est renvoyé, sinon False
-    return len(visited) == len(boxes)
+    visited = []
+    for _ in range(len(boxes)):
+        visited.append([])
+    visited[0] = True
+    view = {0}  # Set pour éviter les doublons
 
+    while view:  # Tant qu'il y a des éléments à traiter dans view
+        current = view.pop()  # Prend le dernier élément de la liste
+        for key in boxes[current]:  # For each key dans la boxe d'index current
+            # Si key n'est pas inférieur à 0 et supérieur à la taille de boxes
+            # et qui n'est pas déjà marqué comme True
+            if 0 <= key < len(boxes) and not visited[key]:
+                # Marque la boxe comme visité
+                visited[key] = True
+                # Ajoute le nouvel index dans la liste view
+                view.add(key)
 
-def recursion_magic(boxes, visited, index):
-    """recursion_magic
-
-    Args:
-        boxes (list of lists): liste des boîtes avec leurs clés.
-        visited (set): ensemble des boîtes déjà ouvertes.
-        index (int): index de la boîte actuelle à explorer.
-    """
-    # Si l'index a déjà été visité
-    if index in visited:
-        return
-
-    # Ajoute l'index actuel au set
-    visited.add(index)
-    for key in boxes[index]:
-        if 0 <= key < len(boxes):
-            recursion_magic(boxes, visited, key)
+    # Return True si tout les éléments de la liste sont identique, sinon False
+    return all(visited)
