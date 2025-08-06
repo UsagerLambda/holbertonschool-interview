@@ -15,48 +15,28 @@ def canUnlockAll(boxes):
     Returns:
         bool: True if all boxes can be opened, False otherwise.
     """
-    # Je crée une liste `checker` contenant autant de listes vides
-    # qu'il y a d'éléments dans la liste `boxes`.
-    # Chaque sous-liste sera remplie par `True` lorsqu'elle sera ouverte,
-    # sauf pour l'index 0 qui est considéré comme ouvert par défaut.
-    checker = []
-    for i in range(len(boxes)):
-        if i != 0:
-            checker.append(False)
-        else:
-            checker.append(True)
-
-    checker = recursion_magic(checker, boxes)
-
-    # Vérifie si chaque item de la liste est égal à True Sinon renvoie False
-    for bool in checker:
-        if bool is not True:
-            return False
-    return True
+    visited = set()  # Créer un set qui stockera les index visité
+    recursion_magic(boxes, visited, index=0)
+    # Si la taille de visited est égal à celle de boxes,
+    # alors toutes les boxe ont été visité donc la condition est vrai
+    # donc true est renvoyé, sinon False
+    return len(visited) == len(boxes)
 
 
-def recursion_magic(checker, boxes, index=0):
+def recursion_magic(boxes, visited, index):
     """recursion_magic
 
     Args:
-        checker (list): a list whose first item is True,
-            followed by False values — one for each remaining sublist in boxes
-        boxes (list of lists): each index represents a box,
-            and each sublist contains keys to other boxes.
-        index (int, optional): Current index from which to explore.
-            Defaults to 0.
-
-    Returns:
-        list: The modified list "checker" filled with the lists checked
+        boxes (list of lists): liste des boîtes avec leurs clés.
+        visited (set): ensemble des boîtes déjà ouvertes.
+        index (int): index de la boîte actuelle à explorer.
     """
-    if 0 <= index < len(checker):
-        # Pour chaque clé dans la boîte à l'index actuel
-        for key in boxes[index]:
-            if 0 <= key < len(checker):
-            # Si la boîte n’a pas encore été ouverte
-                if checker[key] is not True:
-                    checker[key] = True  # Marque la boîte comme ouverte
-                    # Récursion à partir de la liste à l'index key
-                    recursion_magic(checker, boxes, index=key)
+    # Si l'index a déjà été visité
+    if index in visited:
+        return
 
-    return checker
+    # Ajoute l'index actuel au set
+    visited.add(index)
+    for key in boxes[index]:
+        if 0 <= key < len(boxes):
+            recursion_magic(boxes, visited, key)
