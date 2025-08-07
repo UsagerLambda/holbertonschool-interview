@@ -20,13 +20,16 @@ listint_t *insert_node(listint_t **head, int number)
 	new = malloc(sizeof(listint_t));
 	if (new == NULL)  /* Vérifie si ça a échoué */
 		return (NULL);  /* si oui retourne NULL */
-
 	new->n = number; /* assigne au champ n de new notre valeur */
 	new->next = NULL; /* Garde le champ next de new vide pour le moment */
+	if (current == NULL)
+	{
+		*head = new;
+		return (new);
+	}
 
 	if (current->n > number)
 	{
-		printf("oui\n");
 		new->n = current->n;
 		current->n = number;
 		new->next = current->next;
@@ -39,12 +42,9 @@ listint_t *insert_node(listint_t **head, int number)
 		next = current->next; /* Récupère le prochain node */
 		if (next == NULL) /* Vérifie le prochain node */
 			return (NULL);
-
-		/* Si la valeur du prochain node est supérieur à number */
 		if (next->n > number)
 		{
 			current->next = new; /* notre prochain next deviens new */
-			/* le prochain node de new deviens notre ancien next */
 			new->next = next;
 			return (new);
 		}
