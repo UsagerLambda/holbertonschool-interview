@@ -31,9 +31,9 @@ int main(void)
 
     insert_node(&head, 100);
 
-    head = NULL;
-
     insert_node(&head, 927);
+
+    insert_node(&head, 10000);
 
     print_listint(head);
 
