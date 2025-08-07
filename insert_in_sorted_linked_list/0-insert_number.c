@@ -15,6 +15,9 @@ listint_t *insert_node(listint_t **head, int number)
 	listint_t *next;  /* Prend le prochain node */
 	listint_t *new;  /* Variable pour un nouveau node*/
 
+	if (head == NULL)
+		return (NULL);
+
 	current = *head;  /* positionne current sur la tête de la chaine de nœud */
 
 	new = malloc(sizeof(listint_t));
