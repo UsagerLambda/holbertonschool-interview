@@ -27,8 +27,9 @@ heap_t *heap_insert(heap_t **root, int value)
 	new = createNode(value);  /* alloue de la mémoire à new */
 
 	new = find_and_attach_parent(current, new, n);
+	heap_t *inserted_node = new;  /*  save le nœud original */
 	swap(new);
-	return (new);
+	return (inserted_node);
 }
 
 /**
