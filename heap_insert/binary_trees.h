@@ -19,7 +19,14 @@ typedef struct binary_tree_s
 	struct binary_tree_s *right;
 } binary_tree_t;
 
+typedef struct binary_tree_s heap_t;
+
 void binary_tree_print(const binary_tree_t *);
 binary_tree_t *binary_tree_node(binary_tree_t *parent, int value); /* <-- function importée */
+heap_t *heap_insert(heap_t **root, int value);
+heap_t *createNode(int value);
+int count_nodes(heap_t *node);
+int swap(heap_t *new);
+heap_t *find_and_attach_parent(heap_t *current, heap_t *new, int n);
 
 #endif /* _BINARY_TREES_H_ */
