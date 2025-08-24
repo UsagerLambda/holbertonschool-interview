@@ -12,27 +12,22 @@
 heap_t *heap_insert(heap_t **root, int value)
 {
 	heap_t *new;  /* Créer un node vide nommée new*/
-
-	new = createNode(value);  /* alloue de la mémoire à new */
-
 	heap_t *current;  /* Créer un node pour se déplacer*/
-
 	int n;  /* Variable qui prend le nombre de node à partir du nœud actuel */
 
 	current = *root;  /* initialise current sur la racine de l'arbre */
 
 	if ((*root) == NULL)
 	{
-		*root = new;
-		return (new);
+		*root = createNode(value);
+		return (*root);
 	}
 
 	n = count_nodes(current) + 1;
+	new = createNode(value);  /* alloue de la mémoire à new */
 
 	new = find_and_attach_parent(current, new, n);
-
 	swap(new);
-
 	return (new);
 }
 
