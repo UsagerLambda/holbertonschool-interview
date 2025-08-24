@@ -27,9 +27,16 @@ heap_t *heap_insert(heap_t **root, int value)
 	new = createNode(value);  /* alloue de la mémoire à new */
 
 	new = find_and_attach_parent(current, new, n);
-	heap_t *inserted_node = new;  /*  save le nœud original */
+	heap_t *result = new;  /* save le nœud original */
+	/* cherche le nœud qui contient la valeur */
+
+	while (result->parent != NULL && value > result->parent->n)
+	{
+		result = result->parent;
+	}
+
 	swap(new);
-	return (inserted_node);
+	return (result);
 }
 
 /**
