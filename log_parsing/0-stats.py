@@ -25,6 +25,7 @@ if __name__ == "__main__":
     line_count = 0
     try:
         for line in fileinput.input():  # Pour chaque ligne reçu
+            line = line.strip()
             # Vérifie la correspondance avec le regex
             match = re.match(pattern, line)
             if match:  # Si ça match
