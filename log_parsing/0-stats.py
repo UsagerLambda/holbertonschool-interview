@@ -24,21 +24,22 @@ def print_stats():
             print("{}: {}".format(code, status_counts[code]))
 
 
-line_count = 0
-try:
-    for line in fileinput.input():  # Pour chaque ligne reçu
-        # Vérifie la correspondance avec le regex
-        match = re.match(pattern, line)
-        if match:  # Si ça match
-            status_code = match.group(2)  # Récupère le code de status
-            file_size = int(match.group(3))  # Récupère le poid du fichier
-            total_size += file_size  # cumul les poids
-            # ajoute 1 lorsqu'un code du dictionnaire status_counts est trouvé
-            if status_code in status_counts:
-                status_counts[status_code] += 1
-        line_count += 1  # Compte le nombre de lignes traitées
-        if line_count % 10 == 0:  # Tous les 10 lignes traitées
-            print_stats()  # Imprime les stats
-except KeyboardInterrupt:  # CTRL + C
-    print_stats()  # Imprime les stats
-    raise
+if __name__ == "__main__":
+    line_count = 0
+    try:
+        for line in fileinput.input():  # Pour chaque ligne reçu
+            # Vérifie la correspondance avec le regex
+            match = re.match(pattern, line)
+            if match:  # Si ça match
+                status_code = match.group(2)  # Récupère le code de status
+                file_size = int(match.group(3))  # Récupère le poid du fichier
+                total_size += file_size  # cumul les poids
+                # ajoute 1 lorsqu'un code du dictionnaire est trouvé
+                if status_code in status_counts:
+                    status_counts[status_code] += 1
+            line_count += 1  # Compte le nombre de lignes traitées
+            if line_count % 10 == 0:  # Tous les 10 lignes traitées
+                print_stats()  # Imprime les stats
+    except KeyboardInterrupt:  # CTRL + C
+        print_stats()  # Imprime les stats
+        raise
