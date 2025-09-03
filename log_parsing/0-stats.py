@@ -20,7 +20,6 @@ def print_stats():
     print("File size: {}".format(total_size))
     # Imprime les codes et leurs nombres d'apparitions jusqu'à maintenant
     for code in sorted(status_counts.keys()):
-        if status_counts[code]:
             print("{}: {}".format(code, status_counts[code]))
 
 
