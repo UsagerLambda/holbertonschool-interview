@@ -28,10 +28,7 @@ int is_palindrome(listint_t **head)
 		current = current->next;
 	}
 
-	int *list = malloc(sizeof(int) * count);
-
-	if (!list)
-		return (0);
+	int list[count];
 
 	int i;
 
@@ -46,7 +43,6 @@ int is_palindrome(listint_t **head)
 	for (i = 0; i < count / 2; i++)
 		if (list[i] != list[count - 1 - i])
 		{
-			free(list);
 			return (0);
 		}
 
