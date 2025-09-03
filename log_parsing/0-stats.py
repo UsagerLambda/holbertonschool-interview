@@ -20,6 +20,7 @@ def print_stats():
     print("File size: {}".format(total_size))
     # Imprime les codes et leurs nombres d'apparitions jusqu'à maintenant
     for code in sorted(status_counts.keys()):
+        if status_counts[code] > 0:
             print("{}: {}".format(code, status_counts[code]))
 
 
@@ -42,3 +43,5 @@ if __name__ == "__main__":
     except KeyboardInterrupt:  # CTRL + C
         print_stats()  # Imprime les stats
         raise
+    else:
+        print_stats()
