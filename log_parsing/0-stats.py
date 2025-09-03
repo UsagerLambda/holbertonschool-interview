@@ -4,7 +4,7 @@ import fileinput
 import re
 
 pattern = (
-    r'^(\d{1,3}\.){3}\d{1,3} - \[.*\] "GET /projects/260 HTTP/1\.1" '
+    r'^(\d{1,3}\.){3}\d{1,3} - \[[^\]]+\] "GET /projects/260 HTTP/1\.1" '
     r'(\d{3}) (\d+)$'
 )
 total_size = 0
