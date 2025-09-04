@@ -13,25 +13,18 @@ int check_cycle(listint_t *list)
 	if (list == NULL)
 		return (0);
 
-	listint_t *head = list; /* sauvegarde ma tête de la liste */
+	listint_t *head = list;
 
 	listint_t *tortue = head;
 	listint_t *lievre = head;
 
-	int H = 1; /* Création d'une variable qui servira de bool*/
 
-	while (H == 1) /* tant que H = 1 */
+	while (lievre != NULL && lievre->next != NULL)
 	{
 		tortue = tortue->next;
-		lievre = lievre->next;
-		lievre = lievre->next;
+		lievre = lievre->next->next;
 		if (tortue == lievre)
-		{
-			H = 0;
 			return (1);
-		}
-		if (lievre == NULL)
-			return (0);
 	}
-	return (1);
+	return (0);
 }
