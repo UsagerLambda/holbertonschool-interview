@@ -10,6 +10,9 @@
  */
 int check_cycle(listint_t *list)
 {
+	if (list == NULL)
+		return (0);
+
 	listint_t *head = list; /* sauvegarde ma tête de la liste */
 
 	listint_t *current = head; /* Créer une tête de parcourt de liste */
