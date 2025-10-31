@@ -4,8 +4,6 @@ import sys
 
 args = sys.argv
 
-args = ["o", "4"]
-
 # Validation des arguments -------------------------------------------------- #
 if len(args) != 2:
     print("Usage: nqueens N")
