@@ -21,6 +21,7 @@ if N < 4:
 
 # Vérif position ------------------------------------------------------------ #
 
+
 def is_safe(board, row, col):
     """Vérifie si on peut placer une reine à board[row][col]"""
     # Vérifie si il y a une reine sur la même colonne
@@ -41,6 +42,7 @@ def is_safe(board, row, col):
     return True
 
 # main function ------------------------------------------------------------- #
+
 
 def solve(board, row):
     """Résout le problème N reines avec backtracking"""
