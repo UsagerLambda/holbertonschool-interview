@@ -16,7 +16,6 @@ int recursion(int *array, int left, int right, int value)
 	if (left > right)
 		return (-1);
 
-	/* Print the current subarray being searched */
 	printf("Searching in array: ");
 	for (i = left; i <= right; i++)
 	{
@@ -36,7 +35,7 @@ int recursion(int *array, int left, int right, int value)
 			return (recursion(array, left, mid, value));
 	}
 	if (array[mid] > value)
-		return (recursion(array, left, mid - 1, value));
+		return (recursion(array, left, mid, value));
 	else
 		return (recursion(array, mid + 1, right, value));
 }
