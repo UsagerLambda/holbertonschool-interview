@@ -11,10 +11,20 @@
  */
 int recursion(int *array, int left, int right, int value)
 {
-	int mid;
+	int mid, i;
 
 	if (left > right)
 		return (-1);
+
+	/* Print the current subarray being searched */
+	printf("Searching in array: ");
+	for (i = left; i <= right; i++)
+	{
+		printf("%d", array[i]);
+		if (i < right)
+			printf(", ");
+	}
+	printf("\n");
 
 	mid = (left + right) / 2;
 
@@ -23,14 +33,13 @@ int recursion(int *array, int left, int right, int value)
 		if (mid == left || array[mid - 1] != value)
 			return (mid);
 		else
-			return (recursion(array, left, mid - 1, value));
+			return (recursion(array, left, mid, value));
 	}
 	if (array[mid] > value)
 		return (recursion(array, left, mid - 1, value));
 	else
 		return (recursion(array, mid + 1, right, value));
 }
-
 /**
  * advanced_binary - Searches for a value in a sorted array using binary search
  * @array: Pointer to the first element of the array to search in
