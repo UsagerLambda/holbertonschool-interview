@@ -1,20 +1,56 @@
 #include "holberton.h"
 
-/**
- * print_long - Prints a long integer to stdout
- * @n: The long integer to print
- */
-void print_long(long n)
-{
-	if (n < 0)
-	{
-		_putchar('-');
-		n = -n;
-	}
-	if (n >= 10)
-		print_long(n / 10);
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
 
-	_putchar((n % 10) + '0');
+/**
+ * multiply - Multiplies two numbers represented as strings
+ * @num1: First number as string
+ * @num2: Second number as string
+ *
+ * Return: Result as string, or NULL on failure
+ */
+char *multiply(const char *num1, const char *num2)
+{
+	int len1 = strlen(num1);
+	int len2 = strlen(num2);
+	int *tmp = calloc(len1 + len2, sizeof(int));
+	int i, j, k, mul, sum;
+	char *res;
+
+	if (!tmp)
+		return (NULL);
+	for (i = len1 - 1; i >= 0; i--)
+	{
+		for (j = len2 - 1; j >= 0; j--)
+		{
+			mul = (num1[i] - '0') * (num2[j] - '0');
+			sum = mul + tmp[i + j + 1];
+
+			tmp[i + j + 1] = sum % 10;
+			tmp[i + j] += sum / 10;
+		}
+	}
+	i = 0;
+	while (i < len1 + len2 && tmp[i] == 0)
+		i++;
+	if (i == len1 + len2)
+	{
+		free(tmp);
+		return (strdup("0\n"));
+	}
+	res = malloc(len1 + len2 - i + 2);
+	if (!res)
+		return (NULL);
+	k = 0;
+	while (i < len1 + len2)
+		res[k++] = tmp[i++] + '0';
+	res[k++] = '\n';
+	res[k] = '\0';
+	free(tmp);
+	return (res);
 }
 
 /**
@@ -35,25 +71,6 @@ void fprint(const char *message, int code)
 }
 
 /**
- * argv_to_int - Converts a string argument to a long integer
- * @argv: The string to convert
- *
- * Return: The converted long integer
- */
-long argv_to_int(const char *argv)
-{
-	char *p;
-	long conv;
-
-	errno = 0;
-	conv = strtol(argv, &p, 10);
-	if (errno != 0 || *p != '\0' || conv > INT_MAX || conv < INT_MIN)
-		fprint("Error\n\0", 98);
-
-	return (conv);
-}
-
-/**
  * main - Multiplies two positive numbers
  * @argc: The number of arguments
  * @argv: The array of arguments
@@ -62,15 +79,12 @@ long argv_to_int(const char *argv)
  */
 int main(int argc, char *argv[])
 {
+	char *res;
+
 	if (argc == 3)
 	{
-		int num1 = argv_to_int(argv[1]);
-		int num2 = argv_to_int(argv[2]);
-		long mul = (long)num1 * num2;
-
-		print_long(mul);
-		_putchar('\n');
-		exit(0);
+		res = multiply(argv[1], argv[2]);
+		fprint(res, 0);
 	}
 	else
 	{
