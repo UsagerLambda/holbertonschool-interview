@@ -6,6 +6,25 @@
 #include <ctype.h>
 
 /**
+ * is_number - Checks if a string contains only digits
+ * @s: The string to check
+ *
+ * Return: 1 if only digits, 0 otherwise
+ */
+int is_number(char *s)
+{
+	int i = 0;
+
+	while (s[i])
+	{
+		if (!isdigit(s[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+/**
  * multiply - Multiplies two numbers represented as strings
  * @num1: First number as string
  * @num2: Second number as string
@@ -81,14 +100,16 @@ int main(int argc, char *argv[])
 {
 	char *res;
 
-	if (argc == 3)
+	if (argc != 3 || !is_number(argv[1]) || !is_number(argv[2]))
 	{
-		res = multiply(argv[1], argv[2]);
-		fprint(res, 0);
+	    fprint("Error\n", 98);
 	}
-	else
-	{
-		fprint("Error\n\0", 98);
-	}
+	res = multiply(argv[1], argv[2]);
+	if (!res)
+		fprint("Error\n", 98);
+
+	fprint(res, 0);
+	free(res);
+
 	return (0);
 }
