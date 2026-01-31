@@ -102,7 +102,7 @@ int main(int argc, char *argv[])
 
 	if (argc != 3 || !is_number(argv[1]) || !is_number(argv[2]))
 	{
-	    fprint("Error\n", 98);
+	fprint("Error\n", 98);
 	}
 	res = multiply(argv[1], argv[2]);
 	if (!res)
