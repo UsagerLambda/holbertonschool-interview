@@ -12,6 +12,9 @@ List *add_node_end(List **list, char *str)
 {
 	List *new = malloc(sizeof(List));
 
+	if (new == NULL)
+		return (NULL);
+
 	new->str = strdup(str);
 
 	if (*list == NULL)
@@ -44,6 +47,9 @@ List *add_node_end(List **list, char *str)
 List *add_node_begin(List **list, char *str)
 {
 	List *new = malloc(sizeof(List));
+
+	if (new == NULL)
+		return (NULL);
 
 	new->str = strdup(str);
 
