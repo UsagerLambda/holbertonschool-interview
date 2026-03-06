@@ -31,7 +31,7 @@ List *add_node_end(List **list, char *str)
 		(*list)->prev = new;
 	}
 
-	return (*list);
+	return (new);
 }
 
 
