@@ -20,6 +20,7 @@ List *add_node_end(List **list, char *str)
 	if (*list == NULL)
 	{
 		new->next = new->prev = new;
+		*list = new;
 	} else
 	{
 		List *last = (*list)->prev;
