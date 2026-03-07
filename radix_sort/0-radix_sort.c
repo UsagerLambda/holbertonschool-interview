@@ -93,7 +93,7 @@ void sort(int *array, size_t size, int d)
 void radix_sort(int *array, size_t size)
 {
 	if (size < 2)
-    	return;
+		return;
 	int max = max_digit(array, size);
 
 	for (int d = 0; d < max; d++)
