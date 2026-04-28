@@ -4,51 +4,45 @@
 
 
 def isWinner(x, nums):
-    """Détermine le gagnant global après x parties."""
+    """Détermine le gagnant global après x parties.
 
-    def is_prime(n):
-        """Vérifie si n est un nombre premier."""
-        if n < 2:
-            return False
-        for i in range(2, int(n ** 0.5) + 1):
-            if n % i == 0:
-                return False
-        return True
+    Observation : dans une partie sur {1..n}, chaque premier <= n est choisi
+    exactement une fois (dans l'ordre croissant). Le nombre de coups est donc
+    égal au nombre de premiers <= n. Si ce nombre est impair, Maria gagne
+    (elle joue en premier) ; sinon Ben gagne.
 
-    def play(n):
-        """
-        Simulate une partie sur l'ensemble {1, ..., n} et retourne le gagnant.
+    On précalcule le nombre de premiers jusqu'à max(nums) avec un crible
+    d'Ératosthène, puis chaque partie se résout en O(1).
+    """
+    if not nums or x == 0:
+        return None
 
-        À chaque tour, le joueur courant choisit le plus petit nombre premier
-        disponible et supprime tous ses multiples. Le joueur qui ne trouve
-        plus de premier perd.
-        """
-        numbers = list(range(1, n + 1))  # ensemble de nombres disponibles
-        turn = 0  # compteur de tours joués
+    max_n = max(nums)
 
-        while True:
-            # Cherche le premier nombre premier encore disponible
-            prime = next((p for p in numbers if is_prime(p)), None)
-            if prime is None:
-                # Plus aucun premier disponible : le joueur courant perd
-                break
-            # Supprime le premier choisi et tous ses multiples
-            numbers = [x for x in numbers if x % prime != 0]
-            turn += 1
+    # is_prime[i] = True si i est premier
+    is_prime = [False, False] + [True] * (max_n - 1)
+    for i in range(2, int(max_n ** 0.5) + 1):
+        if is_prime[i]:
+            # Supprime tous les multiples de i à partir de i²
+            for multiple in range(i * i, max_n + 1, i):
+                is_prime[multiple] = False
 
-        # Maria joue les tours impairs (1, 3, 5...), Ben les pairs
-        return "Maria" if turn % 2 == 1 else "Ben"
+    # prime_count[i] = nombre de premiers <= i (somme cumulative)
+    prime_count = [0] * (max_n + 1)
+    for i in range(1, max_n + 1):
+        prime_count[i] = prime_count[i - 1] + (1 if is_prime[i] else 0)
 
-    maria, ben = 0, 0  # compteurs de victoires
+    # --- Comptage des victoires ---
+    maria, ben = 0, 0
 
-    for n in nums[:x]:  # on ne joue que les x premières valeurs
-        winner = play(n)
-        if winner == "Maria":
+    for n in nums[:x]:
+        # Nombre de coups dans cette partie = nombre de premiers <= n
+        moves = prime_count[n]
+        if moves % 2 == 1:  # impair → Maria gagne
             maria += 1
-        else:
+        else:               # pair → Ben gagne
             ben += 1
 
-    # Retourne le joueur avec le plus de victoires, ou None si égalité
     if maria > ben:
         return "Maria"
     if ben > maria:
